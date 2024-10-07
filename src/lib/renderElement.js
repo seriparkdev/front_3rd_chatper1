@@ -61,20 +61,10 @@ function updateAttributes(target, newProps, oldProps) {
 
   // - 새로운 props의 속성 추가 또는 업데이트
   for (let [attr, value] of Object.entries(newProps)) {
-    // if (oldProps[attr] === value) continue;
+    if (oldProps[attr] === value) continue;
 
     if (attr === 'style') {
-      const updatedStyle = Object.entries(value)
-        .map(([styleName, styleValue]) => {
-          const key = styleName.replace(
-            /[A-Z]/g,
-            (match) => '-' + match.toLowerCase()
-          );
-          return `${key}: ${styleValue};`;
-        })
-        .join(' ');
-
-      target.setAttribute('style', updatedStyle);
+      Object.assign(target.style, value);
       continue;
     }
     if (attr === 'className') {
